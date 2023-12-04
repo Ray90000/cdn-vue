@@ -8,8 +8,33 @@
 </head>
 
 <body>
+    <div id="app">
+        {{ message }}
+        <div>數字:{{ count }}</div>
+        <!-- v-on:(完整寫法) -->
+        <button type="button" v-on:click="count++">增加</button>
 
-    <div id="app">{{ message }}</div>
+        <!-- @(簡寫) + 監聽的事件(click) => 點擊事件 -->
+        <button type="button" @click="count++">增加</button>
+
+        <button type="button" @click="addCount()">增加</button>
+        <hr>
+        <input type="text" v-model="inputText">
+        <div></div>
+        {{ inputText }}
+
+        <hr>
+        <!-- v-if(判斷式) => 假設為真 該元素出現在問見內，反之，不會出現 -->
+        <div>
+            <div>戰力值: {{power}}</div>
+            <button type="button" @click="power++">增加戰力</button>
+            <button type="button" @click="power--">減少戰力</button>
+            <h1 v-if="power < 5">1111</h1>
+            <h1 v-else-if="power < 10">2222</h1>
+            <h1 v-else>3333</h1>
+        </div>
+    </div>
+
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
@@ -23,12 +48,20 @@
                     message: 'Hello Vue!',
                     array: [],
                     Object: {},
+                    count: 0,
+                    inputText: '',
+                    power: '',
                 }
             },
 
             //函式(function)區塊
             methods: {
                 //寫function的地方
+                addCount() {
+                    //取不到count
+                    //到其他區塊取資料，要用this
+                    this.count++;
+                }
             },
         }).mount('#app')
     </script>
