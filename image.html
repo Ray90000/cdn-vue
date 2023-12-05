@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .red {
+            color: red;
+        }
+
+        .text-center{
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <img :src="imgPath" alt="" @click="clickHandler()">
+        <hr>
+        <!-- 第一種寫法 :class="{'class名稱': 判斷式, ... }" -->
+        <!-- <h1 :class="{'red': power >= 9000}">戰力指數:{{ power }}</h1> -->
+
+        <!-- 第二種方法 :class="fn" 依靠function 回傳要使用的class名稱 -->
+        <h1 :class="cssStyle()">戰力指數:{{ power }}</h1>
+        <button @click="power++">增加戰力</button>
+    </div>
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue
+
+        createApp({
+            //資料(宣告資料的分區)
+            data() {
+                //資料這區一定要return
+                return {
+                    imgPath: './dog1.png',
+                    state: 1,
+                    power: 8999,
+                }
+            },
+
+            //函式(function)區塊
+            methods: {
+                //寫function的地方
+                clickHandler() {
+                    if (this.state === 1) {
+                        this.imgPath = './dog2.png';
+                        this.state = 2;
+                    } else if (this.state === 2) {
+                        this.imgPath = './dog3.png';
+                        this.state = 3;
+                    } else {
+                        this.imgPath = './dog1.png';
+                        this.state = 1;
+                    }
+                },
+                cssStyle(){
+                    if(this.power >= 9000){
+                        return 'red text-center';
+                    }
+                    return '';
+                },
+            },
+        }).mount('#app')
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .card {
+            border: 1px solid black;
+        }
+
+        .card-image {
+            width: 100%;
+        }
+
+        .card-body {
+            padding: 15px 20px;
+        }
+
+        form {
+            margin: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <form @submit.prevent="submitData()">
+            name<input v-model="name" type="text">
+            power<input v-model="power" type="number">
+            <button type="submit">新增資料</button>
+        </form>
+        <div class="container">
+
+            <!-- v-for=" item in array " -->
+            <div v-for="item in array" class="card" :key="item.id">
+                <div class="card-image">
+
+                    <img :src="imageChange(item.power)" alt="">
+                </div>
+                <div class="card-body">
+                    <p class="name"> name:{{item.name}}</p>
+                    <p class="power"> power:{{item.power}}</p>
+                    <div class="btns">
+                        <button type="button" @click="item.power+=1000">增加戰力</button>
+                        <button type="button" @click="item.power-=1000">減少戰力</button>
+                    </div>
+                </div>
+            </div>
+            {{ array }}
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    array: [{
+                        id: 1,
+                        name: 'bread',
+                        power: 5000,
+                    }, {
+                        id: 2,
+                        name: 'weak',
+                        power: 6000,
+                    }, {
+                        id: 3,
+                        name: 'strong',
+                        power: 10000,
+                    }],
+                    name: '',
+                    power: 0,
+                };
+            },
+            methods: {
+                imageChange(power) {
+                    console.log(power);
+                    if (power <= 5000) {
+                        return './dog1.png';
+                    } else if (power <= 8999) {
+                        return './dog2.png';
+                    } else {
+                        return './dog3.png';
+                    }
+                },
+                submitData() {
+                    this.array.push({
+                        id: this.array.length + 1,
+                        name: this.name,
+                        power: this.power,
+                    })
+                }
+            },
+        }).mount('#app');
+    </script>
+
+</body>
+
+</html>
